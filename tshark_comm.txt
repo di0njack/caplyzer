@@ -1,0 +1,30 @@
+tshark -q -z conv,eth;All Layer-2 ETH Conversations
+tshark -q -z endpoints,eth;All MAC Addresses
+tshark -q -z ip_srcdst,tree;All IP Hosts
+tshark -q -z endpoints,tcp;All TCP Hosts
+tshark -q -z endpoints,udp;All UDP Hosts
+tshark -Y 'tcp.flags == 0x02' -T fields -e ip.src -e tcp.dstport;All TCP SYN Traffic (sorted)
+tshark -Y 'not tcp.port==80 and not tcp.port==443 and tcp.flags == 0x02' -T fields -e ip.src -e tcp.dstport;NO 80/443 TCP SYN Traffic (sorted)
+tshark -Y 'tcp.flags == 0x12' -T fields -e ip.src -e tcp.dstport;All SYN ACK Traffic (sorted)
+tshark -Y 'tcp.flags == 0x10' -T fields -e ip.src -e tcp.dstport;All ACK Traffic (sorted)
+tshark -Y 'tcp.port==80 or tcp.port==443 and tcp.flags == 0x10' -T fields -e ip.src -e ip.dst -e tcp.dstport;80/443 TCP ACK Traffic (sorted)
+tshark -q -z conv,ip;All IP Conversations
+tshark -q -z conv,tcp;All TCP Conversations
+tshark -q -z conv,udp;All UDP Conversations
+tshark -T fields -e dns.qry.name -Y 'dns'  -e ip.src -e ip.dst;All DNS Queries (sorted)
+tshark -q -z expert;All TCP Warns and Chats
+tshark -q -z icmp,srt;All ICMP Traffic
+tshark -q -z http,tree;All HTTP Traffic
+tshark -q -z http_srv,tree;All HTTP Traffic by Server
+tshark -Y 'http.request' -T fields -e http.host -e http.user_agent;All Hosts and UA headers (HTTP) (sorted)
+tshark -Y 'http.request' -T fields -e http.host -e ip.dst -e http.request.full_uri;All HTTP URIs
+tshark -Y 'http.request.method==GET';All HTTP GET Requests
+tshark -Y 'http.request.method==POST';All HTTP POST Requests
+tshark -q -z conv,wlan;All WLAN Conversations
+tshark -q -z endpoints,wlan;All WLAN Hosts
+tshark -q -z dhcp,stat;All DHCP Traffic
+tshark -q -z endpoints,usb;All USB Devices
+tshark -q -z ldap,srt;All LDAP Traffic
+tshark -q -z sip,stat;All SIP Traffic
+tshark -q -z smb,srt;All SMB Traffic
+tshark -q -z smb2,srt;All SMBv2 Traffic
